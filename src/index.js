@@ -1,21 +1,30 @@
-class Square extends React.Component {
-  constructor(alesha_props) {
-    super(alesha_props);
-    this.state = {
-      valueW: alesha_props.kkk,
-      fufu: function () {
-        return 1;
-      }
-    };
-  }
 
-  render() {
-    return (
-      <button className="square" onClick={() => this.props.onClick()}>
-        <h1>{this.props.valueW}</h1>
-      </button>
-    );
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      <h1>{props.valueF}</h1>
+    </button>
+  )
+}
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
   }
+  return null;
 }
 
 class Board extends React.Component {
@@ -23,27 +32,40 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(41),
+      squares: Array(9).fill(null),
+      xPlayer: true
     };
   }
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    this.setState({squares: squares});
+    if (squares[i] != null || calculateWinner(squares)) {
+      return;
+    }
+    squares[i] = this.state.xPlayer ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xPlayer: !this.state.xPlayer,
+    });
   }
 
   renderSquare(i) {
     return (
       <Square
-        value={this.state.squares[i]}
+        valueF={this.state.squares[i]}
         onClick={() => this.handleClick(i)}
       />
     );
   }
 
   render() {
-    const status = 'Next player: X';
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xPlayer ? 'X' : 'O');
+    }
 
     return (
       <div>
