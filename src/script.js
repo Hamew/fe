@@ -98,6 +98,6 @@ const output = (str, regex, target) => {
 /**
  * Render the component
  */
-React.render(<SearchArea/>,
+ReactDOM.render(<SearchArea/>,
   document.getElementById('searcharea')
 );
