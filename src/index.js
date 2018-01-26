@@ -1,7 +1,7 @@
 /**
  * React Input Component example that
  * performs a search and subsequently
- * highlightins the corrosponding
+ * highlights the corresponding
  * text upon each keystroke
  *
  * Author: Joshua Michael Waggoner
@@ -11,9 +11,13 @@
  * the input and see if any text
  * matches the regex pattern.
  *
- * Note: Regex has flags set to gloabl
+ * Note: Regex has flags set to global
  * and to ignore case.
  */
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
 
 /**
  * React self updating search area
